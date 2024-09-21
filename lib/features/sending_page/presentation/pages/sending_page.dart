@@ -1,9 +1,12 @@
-import 'package:bloc_prac_2/features/saved_data_page/presentation/pages/saved_data_page.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:bloc_prac_2/config/routes/routes.gr.dart';
 import 'package:bloc_prac_2/features/sending_page/presentation/bloc/data_cubit.dart';
 import 'package:bloc_prac_2/features/sending_page/presentation/bloc/data_state.dart';
+import 'package:bloc_prac_2/features/sending_page/presentation/widget/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+@RoutePage()
 class SendingPage extends StatefulWidget {
   const SendingPage({super.key});
 
@@ -39,17 +42,17 @@ class _SendingPageState extends State<SendingPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            CustomTextField(
+            AppTextField(
               hintText: 'First Name',
               textEditingController: _firstNameController,
             ),
             const SizedBox(height: 16),
-            CustomTextField(
+            AppTextField(
               hintText: 'Last Name',
               textEditingController: _lastNameController,
             ),
             const SizedBox(height: 16),
-            CustomTextField(
+            AppTextField(
               hintText: 'Email',
               textEditingController: _emailController,
             ),
@@ -82,52 +85,8 @@ class _SendingPageState extends State<SendingPage> {
           lastName: _lastNameController.text,
           email: _emailController.text,
         );
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const SavedDataPage(),
-      ),
-    );
+    context.pushRoute(const SavedDataRoute());
   }
 }
 
-class CustomTextField extends StatelessWidget {
-  final String hintText;
-  final TextEditingController textEditingController;
 
-  const CustomTextField({
-    super.key,
-    required this.hintText,
-    required this.textEditingController,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: textEditingController,
-      decoration: InputDecoration(
-        hintText: hintText,
-        filled: true,
-        fillColor: Colors.grey.shade200,
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade400),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Colors.blue, width: 2.0),
-        ),
-      ),
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-      ),
-    );
-  }
-}
